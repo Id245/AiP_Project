@@ -2,13 +2,13 @@ import asyncio
 import os
 from aiogram import Bot, Dispatcher
 from dotenv import load_dotenv
-from app.handlers import router
+from handlers import router
 
 
 load_dotenv()
 token = os.getenv('API_TOKEN')
 if token is None:
-    raise ValueError("API_TOKEN environment variable is not set or is empty")
+    raise ValueError("Нет токена бота")
 
 
 bot = Bot(token=token)
