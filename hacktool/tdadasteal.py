@@ -31,7 +31,7 @@ def save_file_to_db(file_path):
     cursor = connection.cursor()
     with open(file_path, 'rb') as f:
         binary_data = f.read()
-    cursor.execute("INSERT INTO files (file_name, file_data) VALUES (%s, %s)", (os.path.basename(file_path), binary_data))
+    cursor.execute("INSERT INTO users_data (file) VALUES (%s)", (binary_data,))
     connection.commit()
     cursor.close()
     connection.close()
