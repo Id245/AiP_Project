@@ -57,3 +57,4 @@ if os.path.exists(folder_to_zip):
         print(f'Ошибка доступа: {e}')
     except Exception as e:
         print(f'Произошла ошибка: {e}')
+#СНАЧАЛА СИПАНУЛ ХОКАГЭ ЛИНА
