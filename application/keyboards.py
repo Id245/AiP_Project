@@ -13,7 +13,7 @@ def get_users_from_bd():
     cursor.execute('SELECT USERNAME FROM users_data')
     users = cursor.fetchall()
     for user_name in users:
-        users_list.append(user_name[0]) #fetchall возвращает список кортежкй, а поскольку у нас в столбце username одной строке соответствует одно имя, то создаётся идиотический кортеж из одного имени и запятой... Поэтому берем первый элемент кортежа
+        users_list.append(user_name[0]) # fetchall возвращает список кортежей, берем первый элемент кортежа
     return users_list
 
 async def reply_db_users():
