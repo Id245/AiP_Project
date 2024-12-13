@@ -16,6 +16,11 @@ dp = Dispatcher()
 
 
 async def main():
+    """
+    Основная функция для запуска бота.
+
+    :raises ValueError: Если токен бота не найден.
+    """
     dp.include_router(router)
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)

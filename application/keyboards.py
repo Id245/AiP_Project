@@ -3,13 +3,28 @@ from aiogram.utils.keyboard import ReplyKeyboardBuilder
 from sql_connect import db_connector
 
 main = ReplyKeyboardMarkup(keyboard=[
-    [KeyboardButton(text='Выбрать пользователя')]])
+    [KeyboardButton(text='Выбрать пользователя')],
+    [KeyboardButton(text='Список команд')]
+])
 
 user_actions = ReplyKeyboardMarkup(keyboard=[
     [KeyboardButton(text='Получить логи')],
-    [KeyboardButton(text='Получить tdata')]])
+    [KeyboardButton(text='Список команд')]
+])
+
+all_commands = ReplyKeyboardMarkup(keyboard=[
+    [KeyboardButton(text='Выбрать пользователя')],
+    [KeyboardButton(text='Получить логи')]
+])
 
 def get_users_from_bd():
+    """
+    Получает список пользователей из базы данных.
+
+    :returns: Список пользователей из базы данных.
+    :rtype: list
+    :raises Error: Если не удается подключиться к базе данных.
+    """
     users_list = []
     connection = db_connector()
     cursor = connection.cursor()
@@ -21,8 +36,16 @@ def get_users_from_bd():
     return users_list
 
 async def reply_db_users():
+    """
+    Создает клавиатуру с пользователями из базы данных.
+
+    :returns: Клавиатура с пользователями.
+    :rtype: ReplyKeyboardMarkup
+    :raises Error: Если не удается подключиться к базе данных.
+    """
     keyboard1 = ReplyKeyboardBuilder()
     user_list = get_users_from_bd()
     for user in user_list:
         keyboard1.add(KeyboardButton(text=user))
+    keyboard1.add(KeyboardButton(text='Список команд'))
     return keyboard1.adjust(1).as_markup()
